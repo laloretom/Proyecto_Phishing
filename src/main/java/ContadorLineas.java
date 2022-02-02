@@ -11,30 +11,22 @@ import java.util.TreeSet;
 
 public class ContadorLineas extends SimpleFileVisitor<Path>
 {
-    private Map< String, Integer> mapa;
-
+    private static String comandoLista;
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
     {
-        mapa = new HashMap< String, Integer>();
+        Map< String, Integer> mapa = new HashMap< String, Integer>();
         FileReader fl = null;
         BufferedReader in = null;
 
         String name = file.toAbsolutePath().toString();
 
         if( name.toLowerCase().endsWith(".txt")) {
-
             fl = new FileReader(name);
-
             in = new BufferedReader(fl);
-
-            int contadorLineas = 0;
-            int contadorCaracteres = 0;
-            String linea = null;
-
             StreamTokenizer tokenizer = new StreamTokenizer(in);
-
+            String linea = null;
 
             // Valida las palabras y las agrega al mapa
             while (tokenizer.nextToken() != StreamTokenizer.TT_EOF) // Lee todas las palabras
@@ -55,18 +47,22 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
             }
 
             in.close();
-            contadorLineas = tokenizer.lineno();
+            int contadorLineas = tokenizer.lineno();
             int contadorPalabras = mapa.size();
             System.out.printf("%-50s %6d %6d%n", name, contadorLineas, contadorPalabras);
 
-                    Set< String> claves = mapa.keySet(); // obtiene las claves
+
+            if(comandoLista != null) {
+                if (comandoLista.equals("-v")) {
+                    Set<String> claves = mapa.keySet(); // obtiene las claves
                     // ordena las claves
-                    TreeSet< String> Ordenadas = new TreeSet< String>(claves);
+                    TreeSet<String> Ordenadas = new TreeSet<String>(claves);
                     for (String clave : Ordenadas) {
                         System.out.printf(clave + " ");
                     }
                     System.out.printf("\n");
-
+                }
+            }
         }
         return super.visitFile(file, attrs);
     }
@@ -77,22 +73,27 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
         return super.visitFileFailed(file, exc);
     }
 
+
     public static void main(String[] args) throws IOException
     {
 
-        // /Users/rnavarro/datos
         if (args.length < 1)
         {
             System.exit(2);
+        } else if (args.length > 1){
+                comandoLista = args[1];
+            System.out.println(comandoLista);
         }
 
         // iniciar en este directorio
         Path startingDir = Paths.get(args[0]);
+
         // clase para procesar los archivos
         ContadorLineas contadorLineas = new ContadorLineas();
 
-        // iniciar el recorrido de los archivos
         Files.walkFileTree(startingDir, contadorLineas);
+        // iniciar el recorrido de los archivos
+
 
     }
 
