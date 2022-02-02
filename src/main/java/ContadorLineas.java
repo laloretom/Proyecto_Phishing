@@ -8,6 +8,7 @@ import java.util.Locale;
 public class ContadorLineas extends SimpleFileVisitor<Path> {
 
     //    se manda llamar para cada archivo en un directorio
+    // segunda prueba
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
@@ -47,6 +48,8 @@ public class ContadorLineas extends SimpleFileVisitor<Path> {
         // /Users/rnavarro/datos
         if (args.length < 1) {
             System.exit(2);
+        }else if (args.length == 2) {
+
         }
 
         // iniciar en este directorio
