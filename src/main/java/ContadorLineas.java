@@ -68,8 +68,6 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
 
             in.close();
 
-
-
             int contadorLineas = tokenizer.lineno();
             int contadorMapa = mapa.size();
             double porcentaje = (contadorMapa * 100)/contadorTotal;
@@ -78,22 +76,23 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
             System.out.printf("%-30s %6s %8s %6s %10s%n", "Mensaje", "Lineas", "Palabras", "Utiles", "Porcentaje");
             System.out.printf("%-30s %6d %8d %6d %10s%n", name, contadorLineas, contadorTotal, contadorMapa,f.format(porcentaje)+"%");
 
-            if(comandoLista != null) {
-                if (comandoLista.equals("-v")) {
+            if(comandoLista != null)
+            {
+                if (comandoLista.equals("-v"))
+                {
                     Set<String> claves = mapa.keySet(); // obtiene las claves
-                    // ordena las claves
-                    TreeSet<String> Ordenadas = new TreeSet<String>(claves);
-
+                    TreeSet<String> Ordenadas = new TreeSet<String>(claves); // ordena las claves
                     System.out.println(Ordenadas);
                 }
             }
-            System.out.println("--------------------------------------------------------------------");
+            System.out.println("|--------------------------------------------------------------------|");
         }
         return super.visitFile(file, attrs);
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException
+    {
         System.out.printf("No se puede procesar:%30s%n", file.toString()) ;
         return super.visitFileFailed(file, exc);
     }
