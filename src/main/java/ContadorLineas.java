@@ -22,7 +22,6 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
         in.close();
     }
 
-
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
     {
@@ -68,8 +67,6 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
 
             in.close();
 
-
-
             int contadorLineas = tokenizer.lineno();
             int contadorMapa = mapa.size();
             double porcentaje = (contadorMapa * 100)/contadorTotal;
@@ -98,7 +95,6 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
         return super.visitFileFailed(file, exc);
     }
 
-
     public static void main(String[] args) throws IOException
     {
 
@@ -117,12 +113,8 @@ public class ContadorLineas extends SimpleFileVisitor<Path>
 
         stopWord();
 
-
         Files.walkFileTree(startingDir, contadorLineas);
         // iniciar el recorrido de los archivos
 
-
     }
-
-
 }
